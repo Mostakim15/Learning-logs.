@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import dj_database_url
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,16 +22,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-1ubmg#bx9a(0o@09lcj5e%32p)vp025)20$w9t1+ktsjk@y68x'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['*']
-
-import dj_database_url
-import os
-
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(' ') if os.environ.get('ALLOWED_HOSTS') else []
 
 # Application definition
 
@@ -51,7 +49,7 @@ INSTALLED_APPS = [
 
 #my setting.
 LOGIN_REDIRECT_URL = 'learning_logs:topics'
-LOGOUT_REDIRECT_URL = 'learning_logs:index'
+LOGOUT_REDIRECT_URL = 'learning_logs:topics'
 LOGIN_URL = 'accounts:login'
 
 #platform.sh settings - Uncomment the following lines if you are deploying to platform.sh
@@ -124,20 +122,17 @@ WSGI_APPLICATION = 'll_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-# Use dj_database_url to configure the database from the DATABASE_URL environment variable
 DATABASES = {
-    'default': dj_database_url.config(
-        default='sqlite:///db.sqlite3'
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
 
+# Use dj_database_url to configure the database from the DATABASE_URL environment variable
+
+database_url = os.environ.get('DATABASE_URL')
+DATABASES['default'] = dj_database_url.parse(database_url, conn_max_age=600)
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
