@@ -1,0 +1,22 @@
+{% extends 'learning_logs/base.html' %}
+{% comment %} #learning_logs\templates\learning_logs\index.html in setting template directory this folder structure helps to find the template file defaultly" {% endcomment %}
+
+
+{% block page_Header %}
+    <div class="p-3 mb-4 bg-light border rounded-3">
+        <div class="container-fluid py-4">
+            <h1 class="display-3">Track your Learning</h1>
+            <p class="lead">Make your own learing log, and keep a list of the topics you're learning about. whenever you learn something new about a topic, make an entry summarizing what you've learned.</p>
+
+            <a class="btn btn-primary btn-lg mt-1" href="{% url 'accounts:register' %}">Register &raquo;</a>
+        </div>
+
+    </div>
+{% endblock page_Header %}
+    
+
+{% block content %}
+    
+{% endblock content %}
+    
+<h1>hello</h1>

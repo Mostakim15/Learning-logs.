@@ -1,0 +1,34 @@
+{% extends 'learning_logs/base.html' %}
+
+
+{% block page_Header %}
+    <h1>{{topic.text}}</h1>
+    <a href="{% url 'learning_logs:delete_topic' topic.id %}" class="btn btn-sm btn-danger">Delete Topic</a>
+{% endblock page_Header %}
+    
+
+{% block content %}
+    <p>
+        <a class="btn btn-primary" href="{% url 'learning_logs:new_entry' topic.id %}">Add new entry</a>
+    </p>
+        
+        {% for entry in entries %}
+           <div class="card mb-3">
+            <!-- card header with timestamp and edit link-->
+            <h4 class="card-header">
+                {{entry.date_added|date:"M d, Y H:i"}} <!-- Display the date and time -->
+                <a href="{% url 'learning_logs:delete_entry' entry.id %}" class="btn btn-sm btn-danger float-end m-1">Delete Entry</a>
+            <a href="{% url 'learning_logs:edit_entry' entry.id %}" class="btn btn-sm btn-secondary float-end m-1">Edit Entry</a>
+            </h4>
+            <div class="card-body">
+                <p class="card-text">{{entry.text|linebreaks}}</p> <!-- Display the entry text with line breaks --> 
+
+           </div>
+
+        {%empty%}
+        <li>There is no data for this topic yet.</li>
+        {% endfor %}
+        
+
+{% endblock content %}
+    

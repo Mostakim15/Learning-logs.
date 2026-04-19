@@ -1,0 +1,17 @@
+{% extends 'learning_logs/base.html' %}
+{% load django_bootstrap5 %}
+
+{% block page_Header %}
+    <h1>Delete entry</h1>
+    
+{% endblock page_Header %}
+
+{% block content %}
+    <p class="fs-5 fw-semibold text-danger ">Are you sure you want to delete this Topic?</p>
+    <form action="{% url 'learning_logs:delete_topic' topic.id %}" method="post">
+        {% csrf_token %}
+        <h3>{{ topic.text }}</h3>
+        <button type="submit" class="btn btn-danger">Delete Topic</button>
+        <a href="{% url 'learning_logs:topic' topic.id %}" class="btn btn-secondary">Cancel</a>
+    </form>
+{% endblock content %}
