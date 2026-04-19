@@ -27,6 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+import dj_database_url
+import os
+
 
 # Application definition
 
@@ -50,6 +53,29 @@ INSTALLED_APPS = [
 LOGIN_REDIRECT_URL = 'learning_logs:index'
 LOGOUT_REDIRECT_URL = 'learning_logs:index'
 LOGIN_URL = 'accounts:login'
+
+#platform.sh settings - Uncomment the following lines if you are deploying to platform.sh
+# from platformshconfig import Config
+# config = Config()
+# if config.is_valid_platform():
+#     ALLOWED_HOSTS.append('.platform.sh')
+
+#     if config.appDir:
+#         STATIC_ROOT = Path(config.appDir) / 'static'
+#     if config.projectEntropy:
+#         SECRET_KEY = config.projectEntropy
+#     if not config.in_build():
+#         db_settings = config.credentials('database')
+#         DATABASES = {
+#             'default': {
+#                 'ENGINE': 'django.db.backends.postgresql',
+#                 'NAME': db_settings['path'],
+#                 'USER': db_settings['username'],
+#                 'PASSWORD': db_settings['password'],
+#                 'HOST': db_settings['host'],
+#                 'PORT': db_settings['port'],
+#             }
+#         }
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -98,13 +124,19 @@ WSGI_APPLICATION = 'll_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
+# Use dj_database_url to configure the database from the DATABASE_URL environment variable
+DATABASES = {
+    'default': dj_database_url.config(
+        default='sqlite:///db.sqlite3'
+    )
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -141,6 +173,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
