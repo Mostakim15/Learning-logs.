@@ -122,17 +122,30 @@ WSGI_APPLICATION = 'll_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
-# Use dj_database_url to configure the database from the DATABASE_URL environment variable
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 database_url = os.environ.get('DATABASE_URL')
-DATABASES['default'] = dj_database_url.parse(database_url, conn_max_age=600)
+
+if database_url:
+    # যদি Render-এ থাকে বা আপনি নিজে URL সেট করেন
+    DATABASES = {
+        'default': dj_database_url.parse(database_url, conn_max_age=600)
+    }
+    # Render-এর PostgreSQL কানেকশনের জন্য এটি অবশ্যই লাগবে
+    DATABASES['default']['OPTIONS'] = {'sslmode': 'require'}
+else:
+    # যদি আপনার পিসিতে কোনো URL সেট করা না থাকে, তবে অটোমেটিক SQLite ব্যবহার হবে
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
