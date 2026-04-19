@@ -50,7 +50,7 @@ INSTALLED_APPS = [
 ]
 
 #my setting.
-LOGIN_REDIRECT_URL = 'learning_logs:index'
+LOGIN_REDIRECT_URL = 'learning_logs:topics'
 LOGOUT_REDIRECT_URL = 'learning_logs:index'
 LOGIN_URL = 'accounts:login'
 
