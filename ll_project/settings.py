@@ -22,10 +22,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY') or 'hsdhkdkbfdsbfisbfidsbfiudsbfiuds'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
+DEBUG = os.environ.get('DEBUG', 'False') == 'True' 
 
 ALLOWED_HOSTS = ['*']
 
@@ -49,8 +49,9 @@ INSTALLED_APPS = [
 
 #my setting.
 LOGIN_REDIRECT_URL = 'learning_logs:topics'
-LOGOUT_REDIRECT_URL = 'learning_logs:topics'
+LOGOUT_REDIRECT_URL = 'learning_logs:index'
 LOGIN_URL = 'accounts:login'
+REGISTRATION_REDIRECT_URL = 'accounts:topics'
 
 #platform.sh settings - Uncomment the following lines if you are deploying to platform.sh
 # from platformshconfig import Config
