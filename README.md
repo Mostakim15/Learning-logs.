@@ -59,7 +59,7 @@ Follow these steps to run the project locally:
 
 1. Clone the repository:
 
-git clone https://github.com/Mostakim15/Learning-logs.git
+git clone https://github.com/Mostakim15/Learning-logs
 
 2. Navigate into the project folder:
 
