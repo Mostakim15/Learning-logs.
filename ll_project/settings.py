@@ -94,7 +94,7 @@ ROOT_URLCONF = 'll_project.urls'
 TEMPLATES = [## See https://docs.djangoproject.com/en/5.2/ref/settings/#templates
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / "templates"],  # Add this line to specify the project-level templates directory
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
